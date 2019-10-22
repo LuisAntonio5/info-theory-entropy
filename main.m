@@ -1,9 +1,9 @@
 % clear all;
 % clc;
 
-[saxSound,fs] = audioread("C:\Users\Bernardo\Documents\MATLAB\saxriff.wav");
+[saxSound,fs] = audioread("saxriff.wav");
 TextL = fileread("lyrics.txt");
-ImgBin = imread("C:\Users\Bernardo\Downloads\TP1\dados\homerBin.bmp");
+ImgBin = imread("homerBin.bmp");
 ImgMRI = imread("MRI.bmp");
 ImgLand = imread("landscape.bmp");
 ImgQuery = imread("query.bmp");
