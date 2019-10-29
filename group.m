@@ -1,49 +1,24 @@
-function [entropy,numeroMedioBits] = group(signal,alfa)
-[a,b] = ndgrid(alfa);
-newAlfaAux = [a(:),b(:)];
-newAlfaAux = transpose(newAlfaAux);
-alfa = [];
-newSignal = reshape(signal,2,[]);
+function [entropy,numeroMedioBits,histoGroup,alfaGroup] = group(signal,nBits,isSound)
+signal = signal(:);
 histoGroup = [];
-% for i=1:length(newAlfaAux)
-%     aux = newSignal(1,:) == newAlfaAux(1,i);
-%     aux2 = newSignal(2,:) == newAlfaAux(2,i);
-%     aux = [aux;aux2];
-%     result = sum(aux(:,:),1);
-%     n = length(find(result == 2));
-%     if n>0
-%         alfa = [alfa newAlfaAux(:,i)];
-%         histoGroup = [histoGroup,n];
-%     end
-% end
-alfa = unique(newSignal',"row")';
-colGroups = mat2cell(alfa,2,ones(1,size(alfa,2)));
-funcNumOfOccu = @(col)nnz(sum(bsxfun(@eq,newSignal,col),1)>=2);
-histoGroup = cellfun(funcNumOfOccu,colGroups);
-   
-%     result = sum(a(:,:),1);
-%     n = length(find(result == 2));
-%     if n>0
-%         histoGroup = [histoGroup,n];
-%     end
-% end
-% % % alfa = unique(newSignal',"row")';
-entropy = calcEntropy(histoGroup,alfa);
+if(rem(size(signal,1),2) ~= 0)
+    signal = signal(1:size(signal,1)-1,:);
+end
+if(nBits==8)
+    if(isSound)
+        signal = signal*2^16;
+    else
+        signal = uint16(signal(:));
+    end
+elseif(nBits==16)
+    signal = signal*2^16;
+    
+end
+        
+
+grouped = signal(1:2:end) * 2^nBits + signal(2:2:end);
+[histoGroup,alfaGroup] = createHistogram(grouped,0);
+entropy = calcEntropy(histoGroup);
 numeroMedioBits = entropy/2;
-disp("outro");
-disp(entropy);
 
 end
-
-% for i=1:length(newAlfaAux)
-%     count = 0;
-%     for k=1:length(newSignal)
-%         if(newAlfaAux(:,i) == newSignal(:,k))
-%             count = count + 1;
-%         end
-%     end
-%     if(count ~= 0)
-%         alfa = [alfa newAlfaAux(:,i)];
-%         histoGroup = [histoGroup,count];
-%     end
-% end

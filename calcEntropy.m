@@ -1,9 +1,8 @@
 function [entropy] = calcEntropy(dataHisto,alfa)
+dataHisto = nonzeros(dataHisto);
 entropy = 0;
-for i=1:length(alfa)
-    prob = dataHisto(i)/(sum(dataHisto));
-    entropy = entropy + prob * log2(1/prob);
-end
+prob = dataHisto/sum(dataHisto);
+entropy = sum(-prob.*log2(prob));
 end
 
 

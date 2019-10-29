@@ -1,8 +1,8 @@
-function [jointEntropy] = calcJointEntropy(signalX,signalY)
+function [jointEntropy] = calcJointEntropy(signalX,signalY,nBits)
 newMatrix = [signalX(:),signalY(:)]';
-alfa = unique(newMatrix',"rows")';
-groups = mat2cell(alfa,2,ones(1,size(alfa,2)));
-funcGroups = @(col)nnz(sum(bsxfun(@eq,newMatrix,col),1)>=2);
-histoJoint = cellfun(funcGroups,groups);
+signalX = uint16(signalX);
+signalY = uint16(signalY);
+grouped = signalX(:) * 2^nBits + signalY(:);
+[histoJoint,alfa] = createHistogram(grouped,0);
 jointEntropy = calcEntropy(histoJoint,alfa);
 end
