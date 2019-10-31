@@ -4,7 +4,7 @@ signal = signal (:);
 [dataHisto,alfa] = createHistogram(signal,0,ALFABETO);
 entropy = calcEntropy(dataHisto,ALFABETO);
 [eHuffman] = huffmanBits(dataHisto);
-[groupEntropy,numMedBits,histoGroup,alfaG] = group(signal,8,0);
+[groupEntropy,numMedBits,histoGroup,alfaG] = group(signal,8,ALFABETO,0);
 %disp(entropy);
 end
 

@@ -1,5 +1,5 @@
 function[] = createHistoEx3(hImgBin,aImgBin,hImg,aImg,hLand,aLand,hText,aText,hSound,aSound)
-    figure('name','Distribuição Estatística das fontes dadas','NumberTitle','off');
+    figure('name','Distribuição Estatística das fontes EX3','NumberTitle','off');
     subplot(3,2,1);
     bar(hImgBin);
     set(gca,"XTick",1:255:length(aImgBin),"XtickLabels",aImgBin(:));
@@ -16,7 +16,7 @@ function[] = createHistoEx3(hImgBin,aImgBin,hImg,aImg,hLand,aLand,hText,aText,hS
     subplot(3,2,4);
     bar(hSound);
     set(gca,"XTick",1:2629:length(aSound),"XtickLabels",aSound([1:2629:end]));
-    title('guitarSolo.wav');
+    title('soundMono.wav');
     subplot(3,2,5);
     bar(hText);
     set(gca,"XTick",1:7:length(aText),"XtickLabels",num2cell(char(aText(1:7:end))));
